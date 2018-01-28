@@ -25,13 +25,13 @@ Interaction events and digital feedbacks commands are exchanged between anyPawns
 
 ### Interaction events (Events sent from the anyPawn)
 
-| Type | Interaction Event | HEX Code (B1,B2,B3)  |DEC Code| Description | Sample mapping with game mechanics | Comments |
+| Type | Interaction Event | HEX Code (B1B2B3)  |DEC Code| Description | Sample mapping with game mechanics | Comments |
 |------|----|----|-----|----|-----|-------------------------------|
 | TE | SHAKE | 0xCB | 203 | anyPawn is shaken | Throw a random number |
 | | TAP | 0xC9 | 201 |anyPawn is tapped on the top side | Increase a resource by one unit |
 | | DOUBLE-TAP | 0xCA | 203 | anyPawn is double-tapped on the top side | Decrease a resource by one unit |
 | | TILT | 0xCC | 204 |anyPawn is tilted upside down | Undo a previous action | Not implemented
-| TCE | MOVE | 0xC2,[current],[last] | 194,[c],[l]|anyPawn is moved inside a new sector of the board | Signal player's placement and movements among different board sectors | 2nd and 3rd byte contains the ID of current and last sectors (see below)
+| TCE | MOVE | 0xC2[current][last] | 194,[c],[l]|anyPawn is moved inside a new sector of the board | Signal player's placement and movements among different board sectors | 2nd and 3rd byte contains the ID of current and last sectors (see below)
 
 TCEs recognition is implemented by assigning and imprinting unique colors to different sectors of a game board (representing visual constraints to token’s locations). A color-sensor located on the bottom of anyPawn samples the color temperature of the surface the device is lying on, returning an unique color-code which is used as a fingerprint for board constraints, enabling to detect when anyPawn is moved between two sectors. 
 
@@ -51,18 +51,19 @@ TCEs recognition is implemented by assigning and imprinting unique colors to dif
 | Yellow | 37 | 0x25 |
 
 Printable list of color -> [PDF](Color_template_print.pdf)
-
+(For NTNU students: boards and templates needs to be printed with IDI laser printer)
 
 ### Digital feedbacks (Commands sent to the anyPawn)
 
-| Type | Feedback | HEX Code (B1,B2,..B20) | Description | Sample mapping with game mechanics | Comments |
-|------|----------|-------------|----|----|----------------------------|
-| Visual | LED\_[color] | TBD,C1,C2,C3 | anyPawn lights up in the color defined by [color] | Show the status of a resource | C1,C2,C3 are RGB value in HEX |
+| Type | Feedback | HEX Code (B1B2..B20) | DEC Code | Description | Sample mapping with game mechanics | Comments |
+|------|----------|-------|------|----|----|----------------------------|
+| Visual | LED_ON | 81[R][G][B] | 129[R][G][B] | anyPawn lights up in the color defined by [R][G][B] | Show the status of a resource | [R][G][B] are RGB value in HEX |
+| Visual | LED_BLINK | 82[time][period] | 130[time][period] | anyPawn blinks for [time] and with [period] | Show the status of a resource | |
 | | MATRIX\_[text] | TBD,Ch1,Ch2,... | anyPawn top side display shows the string [text] | Shows player's action point allowance | Ch1,Ch2,Ch3 are char in ASCII code, up to 19 characters |
 | | MATRIX\_[icon] | TBD,Ic | anyPawn top side display shows the icon [icon]  | Show the result of a dice roll | Ic is the ide of the Icon: XX for arrow, XX for ... |
 | | MATRIX\_[raw matrix] | TBD,B1,B2,B3,B4,B5,B6,B7,B8 | anyPawn top side display show a 8x8 point matrix | B1...B8 represent the tate (1 or 0) of the 64 LEDs in the matrix |
-|Haptic| SHRT\_HAPTIC | TBD | anyPawn produces a short haptic feedback | Signal a player to move to the next turn |
-|| LNG\_HATIC | C8 | anyPawn produces a long haptic feedback | Signal a player an action not allowed |
+|Haptic| HAPTIC | C8[time] | anyPawn produces an haptic feedback with [time] lenght | Signal a player to move to the next turn |
+
 
 Token digital feedbacks are implemented using three different devices: an RGB LED, a 8x8 LED Matrix and a vibration motor.
 
