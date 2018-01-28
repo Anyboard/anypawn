@@ -15,12 +15,9 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=no
 		initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
-
 	<title>AnyboardJS Demo</title>
-
 	<style>
 		@import 'ui/css/evothings-app.css';
-
 		p.topic {
 			font-weight: bold;
 		}
@@ -188,9 +185,6 @@
 						$("#token_feedback").append('<button type="button" onclick="app.ledGreen('+ "'" + token.name + "'" +' , '+ "'" + 'off' +"'" +')"class="indicator black"> LED Off </button><br/><br/> ');
 						
 						$("#token_feedback").append('<button type="button" onclick="app.blinkLED('+ "'" + token.name + "'" +' , 3, 20)"class="indicator3 grey"> LED Blink </button><br/><br/> ');
-						
-						$("#token_feedback").append('<button type="button" onclick="app.selectPaper('+ "'" + token.name + "'" +' , 2)"class="indicator3 grey"> Inkjet Board </button><br/><br/> ');
-						$("#token_feedback").append('<button type="button" onclick="app.selectPaper('+ "'" + token.name + "'" +' , 1)"class="indicator3 grey"> Laser Board </button><br/><br/> ');
                     });
 
                     // Add listener to be executed if the token disconnects
@@ -402,7 +396,7 @@
 		<h1>AnyboardPawn Demo</h1>
 		<div>
 			<p>
-				Demo of the pawn token that uses all type of events : 1) Token solo, 2) Token feedback, 3) Token-token, 4) Token constraint
+				Demo of the pawn token that uses all type of events : 1) Token solo, 2) Token feedback, 3) Token constraint
 			</p>
 			<p>
 				Turn on the token.
@@ -434,7 +428,7 @@
 				<div id="shake" class="indicator">
 					Shake
 				</div>
-				<div id="tilt" class="indicator">
+		<!--		<div id="tilt" class="indicator">
 					Tilt
 				</div>
 				<div id="cclkRot" class="indicator">
@@ -442,7 +436,7 @@
 				</div>
 				<div id="clkRot" class="indicator">
 					Clockwise Rot
-				</div>
+				</div> -->
 			</div>
 		</div>
         
@@ -468,14 +462,7 @@
 
 		</div>
 
-		<div id="token_token">
-			<h1> Token-Token Event </h1>
-			<div id="ind">
-				<div id="tokentoken" class="indicator2">
-					Next to another token
-				</div>
-			</div>
-		</div>
+
 
 	</div>
 </body>
