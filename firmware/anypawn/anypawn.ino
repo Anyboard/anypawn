@@ -18,7 +18,6 @@
 // BOARD CONSTANTS
 #define ACC_INT1_PIN        4 // Pin where the acceleromter interrupt1 is connected
 #define VIBRATING_M_PIN     3 // Pin where the vibrating motor is connected
-
 #define LED_R_PIN           0
 #define LED_G_PIN           1
 #define LED_B_PIN           2
@@ -68,20 +67,12 @@ void setup(void)
   TokenFeedback.setMatrix8x8(Matrix);
   
   // Configure the RFduino BLE properties
-  
   char DeviceName[8] = {0};
-
-  //String MAC = String(*(uint8_t *)0x100000a4, HEX);
-  //String suffix = "AnyPawn";
-  //AdvertiseName = suffix + MAC
-  
   BLE.AdvertiseName.toCharArray(DeviceName, 8);
   RFduinoBLE.deviceName = DeviceName;
   RFduinoBLE.txPowerLevel = -20;
   RFduinoBLE.begin();
-  
   Serial.println("Setup OK!");
-
   timer_config();
 }
 

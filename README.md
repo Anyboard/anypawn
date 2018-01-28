@@ -5,7 +5,7 @@ This repository contains firmware, electronic schematics and case construction f
 ![Photo](imgs/tokens.png)
 
 ## Demo Application
-See [anyPawn demo app](../games/demo-anyPawn) for a simple demonstrator of the capabilities of AnyPawn.
+See [anyPawn demo app](demo-apps/) for a simple demonstrator of the capabilities of AnyPawn.
 
 ## Fundamentals
 
@@ -14,7 +14,9 @@ AnyPawns are a technology-augmented version of game tokens commonly found in mos
 Interaction events and digital feedbacks commands are exchanged between anyPawns and the smartphone running *anyboardJS library* using a 1-20 byte binary protocol over a BLE connection. Mapping between events/feedbacks names and the binary codes is provided [here](./firmware/anypawn/protocol.h).
 
 BLE Service: 00002220-0000-1000-8000-00805f9b34fb
+
 BLE Carachteristic for interaction events: 00002221-0000-1000-8000-00805f9b34fb
+
 BLE Caratchteristic for feedbacks: 00002222-0000-1000-8000-00805f9b34fb
 
 If not familliar with BLE protocol I reccomend to read [this](https://github.com/tigoe/BLEDocs/wiki/Introduction-to-Bluetooth-LE)

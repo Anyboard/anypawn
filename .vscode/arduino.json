@@ -1,0 +1,5 @@
+{
+    "board": "RFduino:RFduino:RFduino",
+    "port": "/dev/cu.usbserial-DJ0082XK",
+    "sketch": "firmware/anypawn/anypawn.ino"
+}
