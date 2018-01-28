@@ -30,7 +30,6 @@ Interaction events and digital feedbacks commands are exchanged between anyPawns
 | TE | SHAKE | 0xCB | 203 | anyPawn is shaken | Throw a random number |
 | | TAP | 0xC9 | 201 |anyPawn is tapped on the top side | Increase a resource by one unit |
 | | DOUBLE-TAP | 0xCA | 203 | anyPawn is double-tapped on the top side | Decrease a resource by one unit |
-| | ROTATE | 0xDC, PAR | |PAR defines clockwise or counterclockwise rotation, 0x01 (1) if clockwise and 0xFF (-1) if counter clockwise | | Not implemented
 | | TILT | 0xCC | 204 |anyPawn is tilted upside down | Undo a previous action | Not implemented
 | TCE | MOVE | 0xC2,[current],[last] | 194,[c],[l]|anyPawn is moved inside a new sector of the board | Signal player's placement and movements among different board sectors | 2nd and 3rd byte contains the ID of current and last sectors (see below)
 
@@ -51,8 +50,7 @@ TCEs recognition is implemented by assigning and imprinting unique colors to dif
 | Dark Orange | 33 | 0x21 |
 | Yellow | 37 | 0x25 |
 
-PDF of the color for print -> 
-
+Printable list of color -> [PDF](Color_template_print.pdf)
 
 
 ### Digital feedbacks (Commands sent to the anyPawn)
@@ -84,7 +82,7 @@ A prototype of anyPawn can be built with the following off the shelf components.
 * Accelerometer ADXL345 ([datasheet](http://www.analog.com/media/en/technical-documentation/data-sheets/ADXL345.pdf))
 * Vibrating motor ([datasheet](https://www.sparkfun.com/datasheets/Robotics/310-101_datasheet.pdf))
 * Color detection sensor TCS347254 ([datasheet](https://www.adafruit.com/datasheets/TCS34725.pdf))
-* Capacitive sensor MPR121 ([datasheet](https://www.sparkfun.com/datasheets/Components/MPR121.pdf))
+* Capacitive sensor MPR121 ([datasheet](https://www.sparkfun.com/datasheets/Components/MPR121.pdf)) *NOT IMPLEMENTED*
 * LED display ([datasheet](https://www.sparkfun.com/datasheets/Components/MPR121.pdf), [Adafruit product](https://www.adafruit.com/products/870))
 
 ## Firmware
@@ -98,7 +96,6 @@ Third parties libraries used (included in the libraries folder):
 
 - For the ADXL345 the Adafruit_ADXL345 Arduino's library is used ([Adafruit_ADXL345](https://github.com/adafruit/Adafruit_ADXL345)).
 - The Adafruit_ADXL345 library is based on the Adafruit's Unified Sensor Library ([Adafruit_Sensor](https://github.com/adafruit/Adafruit_Sensor)).
-- For the MPR121 the Adafruit_MPR121 Arduino's library is used ([Adafruit_MPR121](https://github.com/adafruit/Adafruit_MPR121_Library))
 - For the TCS34725 used with an autorage mechanism the Adafruit library is used ([Adafruit_TCS34725](https://github.com/adafruit/Adafruit_TCS34725/tree/master/examples/tcs34725autorange))
 - For the LED display the Adafruit_GFX library is used ([Adafruit_GFX](https://github.com/adafruit/Adafruit-GFX-Library))
 - And the Adafruit_lED_backpack library is also required ([Adafruit_lED_backpack](https://github.com/adafruit/Adafruit-LED-Backpack-Library))
