@@ -58,11 +58,10 @@ Printable list of color -> [PDF](Color_template_print.pdf)
 | Type | Feedback | HEX Code (B1B2..B20) | DEC Code | Description | Sample mapping with game mechanics | Comments |
 |------|----------|-------|------|----|----|----------------------------|
 | Visual | LED_ON | 81[R][G][B] | 129[R][G][B] | anyPawn lights up in the color defined by [R][G][B] | Show the status of a resource | [R][G][B] are RGB value in HEX |
-| Visual | LED_BLINK | 82[time][period] | 130[time][period] | anyPawn blinks for [time] and with [period] | Show the status of a resource | |
-| | MATRIX\_[text] | TBD,Ch1,Ch2,... | anyPawn top side display shows the string [text] | Shows player's action point allowance | Ch1,Ch2,Ch3 are char in ASCII code, up to 19 characters |
-| | MATRIX\_[icon] | TBD,Ic | anyPawn top side display shows the icon [icon]  | Show the result of a dice roll | Ic is the ide of the Icon: XX for arrow, XX for ... |
-| | MATRIX\_[raw matrix] | TBD,B1,B2,B3,B4,B5,B6,B7,B8 | anyPawn top side display show a 8x8 point matrix | B1...B8 represent the tate (1 or 0) of the 64 LEDs in the matrix |
-|Haptic| HAPTIC | C8[time] | anyPawn produces an haptic feedback with [time] lenght | Signal a player to move to the next turn |
+|  | LED_BLINK | 82[time][period] | 130[time][period] | anyPawn blinks for [time] and with [period] | Show the status of a resource | |
+| | MATRIX\_[number] | CF[digit] | 207[digit] | anyPawn top side display shows the number [digit] | Shows player's action point allowance |  |
+| | MATRIX\_[pattern] | CE[pattern] | 230[pattern] | anyPawn top side display show a 8x8 point matrix | [pattern] is a 8-byte pattern that encode the 64 pixel on the matrix |
+|Haptic| HAPTIC | C8[time] | 200[time] | anyPawn produces an haptic feedback with [time] lenght | Signal a player to move to the next turn |
 
 
 Token digital feedbacks are implemented using three different devices: an RGB LED, a 8x8 LED Matrix and a vibration motor.
