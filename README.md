@@ -9,34 +9,51 @@ See [anyPawn demo app](../games/demo-anyPawn) for a simple demonstrator of the c
 
 ## Fundamentals
 
-AnyPawns are a technology-augmented version of game pieces commonly found in most games. They are capable of capturing the set of [interaction events and produce digital feedbacks](../readme.md#design entities). The following tables cluster interaction events and digital feedback supported by typology and provide a player-perspective description of their role. Possible mapping with dynamics commonly found in board games are also exemplified. For example the action of shaking an anyPawn can be mapped to the draw of a random number or event.
+AnyPawns are a technology-augmented version of game tokens commonly found in most games. They are capable of capturing the set of *interaction events* triggered by the player and generating *digital feedbacks*. The following tables cluster interaction events and digital feedback supported and provide a player-perspective description of their role. Possible mapping with dynamics commonly found in board games are also exemplified. For example the action of shaking an anyPawn can be mapped to the draw of a random number or event.
 
-Interaction events and digital feedbacks commands are exchanged between anyPawns and the smartphone running anyboardJS using a binary protocol using 1-3 byte. Mapping between events/feedbacks names and the binary codes is provided [here](./firmware/anypawn/protocol.h).
+Interaction events and digital feedbacks commands are exchanged between anyPawns and the smartphone running *anyboardJS library* using a 1-20 byte binary protocol over a BLE connection. Mapping between events/feedbacks names and the binary codes is provided [here](./firmware/anypawn/protocol.h).
 
-- The first byte describes the type of event or digital feedback (command)
+### Anypawn binary interface architecture
+
+- The first byte describes the type of event or digital feedback 
 - The second and third bytes add optional parameter
 
 - Token-solo events use one byte only (name of the event)
-- Token-constraint events use three bytes (name of the event, sector ID [C_ID]
+- Token-constraint events use three bytes (name of the event, last sector ID, current sector ID
 - Token-token events use two bytes (name of the event, ID of the nearby pawn, side of the pawn) *NOT IMPLEMENTED*
 - Digital feedbacks use 1-20 bytes (name of the event, 1-19 bytes in payload)
 
 ### Interaction events (Events sent from the anyPawn)
 
-| Type | Interaction Event | HEX Code (B1,B2,B3) | Description | Sample mapping with game mechanics | Comments |
-|------|----|----|-----|----|------------------------------------|
-| TE | SHAKE | CB | anyPawn is shaken | Throw a random number |
-| | TILT | CC |anyPawn is tilted upside down | Undo a previous action |
-| | TAP | C9 | anyPawn is tapped on the top side | Increase a resource by one unit |
-|	| DOUBLE-TAP | CA | anyPawn is double-tapped on the top side | Decrease a resource by one unit |
-| | ROTATE | DC, PAR | PAR defines clockwise or counterclockwise rotation, 0x01 (1) if clockwise and 0xFF (-1) if counter clockwise |  
-| TCE | ENTERS\_[cID] | TBD, cID | anyPawn is moved inside a cID sector of the board | Signal player's placement and movements among different board sectors |
-| | LEAVES\_[cID] | TBD, cID | anyPawn is moved away from cID sector | Signal player's placement and movements among different board sectors  |
-|	TTE | APCHES\_[aID2, side] | TBD,aID,side | anyPawn is moved close to another one | Trade a resource between two players | Not implemented|
-| | LEAVES\_[aID2, side] | TBD,aID,side | anyPawn is moved away to another one | Break a relationship between two players | Not implemented |
+| Type | Interaction Event | HEX Code (B1,B2,B3)  |DEC Code| Description | Sample mapping with game mechanics | Comments |
+|------|----|----|-----|----|-----|-------------------------------|
+| TE | SHAKE | 0xCB | 203 | anyPawn is shaken | Throw a random number |
+| | TAP | 0xC9 | 201 |anyPawn is tapped on the top side | Increase a resource by one unit |
+| | DOUBLE-TAP | 0xCA | 203 | anyPawn is double-tapped on the top side | Decrease a resource by one unit |
+| | ROTATE | 0xDC, PAR | |PAR defines clockwise or counterclockwise rotation, 0x01 (1) if clockwise and 0xFF (-1) if counter clockwise | | Not implemented
+| | TILT | 0xCC | 204 |anyPawn is tilted upside down | Undo a previous action | Not implemented
+| TCE | MOVE | 0xC2,[current],[last] | 194,[c],[l]|anyPawn is moved inside a new sector of the board | Signal player's placement and movements among different board sectors | 2nd and 3rd byte contains the ID of current and last sectors (see below)
 
-TCEs recognition is implemented by assigning and imprinting unique colors to different sectors of a game board (representing visual constraints to token’s locations). A color-sensor located on the bottom of anyPawn samples the color temperature of the surface the device is lying on, returning an unique color- code which is used as a fingerprint for board constraints, enabling to detect when anyPawn is moved between two sectors. TCE detection also makes use of accelerometer data to ensure that color sampling is performed only when the device is steady on a sector, deactivating the sensing routine when anyPawn being moved.
-TTEs are recognized by computing the distance between two pawns using RSSI (Received Signal Strength) data from the radio transmitter.
+TCEs recognition is implemented by assigning and imprinting unique colors to different sectors of a game board (representing visual constraints to token’s locations). A color-sensor located on the bottom of anyPawn samples the color temperature of the surface the device is lying on, returning an unique color-code which is used as a fingerprint for board constraints, enabling to detect when anyPawn is moved between two sectors. 
+
+| Color name |  ID (DEC) | ID (HEX) | 
+|------------|-----------|----------|
+|Light Blue | 5 | 0x5 |
+|Blue | 2 | 0x2 |
+|Dark Blue | 7 | 0x7 |
+| Purple | 14 | 0xE |
+| Dark Red | 16 | 0x10 |
+| Red | 18 | 0x12 |
+| Light Green | 21 | 0x15 |
+| Green | 24 | 0x18 |
+| Dark Green | 30 | 0x1E |
+| Orange | 31 | 0x1F |
+| Dark Orange | 33 | 0x21 |
+| Yellow | 37 | 0x25 |
+
+PDF of the color for print -> 
+
+
 
 ### Digital feedbacks (Commands sent to the anyPawn)
 
